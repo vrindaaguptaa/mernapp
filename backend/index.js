@@ -5,7 +5,8 @@ const port = process.env.PORT || 5000;
 const mongoDB=require('./db')
 mongoDB();
 app.use((req,res,next) =>{
-  res.setHeader("process.env.FRONTEND_URL","http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL || "http://localhost:3000");
+
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
