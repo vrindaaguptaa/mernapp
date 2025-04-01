@@ -9,7 +9,7 @@ mongoDB();
 
 // Enable CORS for all requests
 app.use(cors({
-  origin: "https://mernapp-front.onrender.com/", // Allow requests only from your frontend
+  origin: "https://mernapp-front.onrender.com", // Allow requests only from your frontend
   credentials: true, // Allow cookies & authorization headers
   methods: "GET,POST,PUT,DELETE" // Allowed HTTP methods
 }));
