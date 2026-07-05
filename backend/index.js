@@ -24,7 +24,10 @@ app.use(cors({
 app.use(express.json());
 
 app.use('/api', require('./Routes/CreateUser'));
-app.use('/api', require('./Routes/DisplayData'));
+// app.use('/api', require('./Routes/DisplayData'));
+const displayRoutes = require('./Routes/DisplayData');
+console.log("DisplayData routes loaded");
+app.use('/api', displayRoutes);
 app.use('/api', require('./Routes/Orders'));
 app.use('/api', require('./Routes/Admin'));
 

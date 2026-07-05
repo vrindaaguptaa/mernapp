@@ -1,3 +1,4 @@
+console.log("DisplayData.js loaded");
 const express = require('express');
 const router = express.Router();
 
