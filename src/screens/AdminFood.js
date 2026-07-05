@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Delete from '@mui/icons-material/Delete';
@@ -23,16 +23,8 @@ export default function AdminFood() {
 
   const token = localStorage.getItem('authToken');
 
-  useEffect(() => {
-    if (!token) {
-      navigate('/login');
-      return;
-    }
-    fetchFoods();
-    fetchCategories();
-  }, [token, navigate]);
 
-  const fetchFoods = async () => {
+  const fetchFoods = useCallback(async () => {
     try {
       const res = await fetch(buildApiUrl('/api/admin/foods'), {
         headers: { 'auth-token': token }
@@ -46,7 +38,18 @@ export default function AdminFood() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+    fetchFoods();
+    fetchCategories();
+  }, [token, navigate, fetchFoods, fetchCategories]);
+
+  
 
   const fetchCategories = async () => {
     try {

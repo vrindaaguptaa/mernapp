@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Delete from '@mui/icons-material/Delete';
@@ -15,15 +15,8 @@ export default function AdminCategories() {
 
   const token = localStorage.getItem('authToken');
 
-  useEffect(() => {
-    if (!token) {
-      navigate('/login');
-      return;
-    }
-    fetchCategories();
-  }, [token, navigate]);
 
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
       const res = await fetch(buildApiUrl('/api/admin/categories'), {
         headers: { 'auth-token': token }
@@ -37,7 +30,16 @@ export default function AdminCategories() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+    fetchCategories();
+  }, [token, navigate, fetchCategories]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
