@@ -1,85 +1,128 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useDispatchCart, useCart } from './ContextReducer';
-export default function Card(props) {
-    let dispatch = useDispatchCart();
-    let data = useCart();
-    let navigate = useNavigate()
-    const priceRef = useRef();
-    let options = props.options;
-    let priceOptions = Object.keys(options);
-    let foodItem = props.foodItems;
-    const [qty, setQty] = useState(1)
-    const [size, setSize] = useState("")
-    const handleClick = () => {
-        if (!localStorage.getItem("token")) {
-            navigate("/login")
-        }
-    }
-    const handleQty = (e) => {
-        setQty(e.target.value);
-    }
-    const handleAddToCart = () => {
-        const handleAddToCart = async () => {
-            let food = []
-            for (const item of data) {
-                if (item.id === foodItem._id) {
-                    food = item;
-                    break;
-                }
-            }
-            console.log(food)
-            console.log(new Date())
-            if (food !== []) {
-                if (food.size == size) {
-                    await dispatch({ type: "UPDATE", id: foodItem._id, price: finalPrice, qty: qty })
-                    return;
-                }
-                else if (food.size !== size) {
-                    await dispatch({ type: "ADD", id: foodItem._id, name: foodItem.name, price: finalPrice, qty: qty, size: size, img: props.ImgSrc })
-                    return;
-                }
-                return;
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatchCart } from './ContextReducer';
+import { toast, Slide } from 'react-toastify';
+import StarRounded from '@mui/icons-material/StarRounded';
+import AddShoppingCartRounded from '@mui/icons-material/AddShoppingCartRounded';
+import CheckRounded from '@mui/icons-material/CheckRounded';
+import 'react-toastify/dist/ReactToastify.css';
 
-            }
-            await dispatch({ type: "ADD", id: foodItem._id, name: foodItem.name, price: finalPrice, qty: qty, size: size })
-            console.log(data);
-        }
+export default function Card({ foodItem, options }) {
+  const dispatch = useDispatchCart();
+  const navigate = useNavigate();
+  const [qty, setQty] = useState(1);
+  const [size, setSize] = useState('');
+  const [justAdded, setJustAdded] = useState(false);
+  const addedTimer = useRef(null);
+
+  const priceOptions = useMemo(() => Object.keys(options || {}), [options]);
+  const selectedSize = size || priceOptions[0] || '';
+  const unitPrice = parseInt(options?.[selectedSize] || 0, 10);
+  const finalPrice = qty * unitPrice;
+
+  useEffect(() => {
+    if (priceOptions.length > 0 && !priceOptions.includes(size)) {
+      setSize(priceOptions[0]);
     }
-    let finalPrice = qty * parseInt(options[size]);
-    useEffect(() => {
-        setSize(priceRef.current.value)
-    }, [])
-    return (
-        <div>
-            <div>
-                <div className="card mt-3" style={{ "width": "18rem", "maxHeight": "360px" }}>
-                    <img src={props.foodItem.img} className="card-img-top" alt="..." style={{ height: "120px", objectFit: "fill" }} />
-                    <div className="card-body">
-                        <h5 className="card-title">{props.foodItem.name}</h5>
-                        <div className='container w-100'>
-                            <select className='m-2 h-100 bg-success rounded' onChange={(e) => setQty(e.target.value)}>
-                                {Array.from(Array(6), (e, i) => {
-                                    return (
-                                        <option key={i + 1} value={i + 1}>{i + 1}</option>
-                                    )
-                                })}
-                            </select>
-                            <select className='m-2 h-100 bg-success rounded' ref={priceRef} onChange={(e) => setSize(e.target.value)}>
-                                {priceOptions.map((data) => {
-                                    return <option key={data} value={data}>{data}</option>
-                                })}
-                            </select>
-                            <div className='d-inline h=100 fs-5'>
-                                Rs{finalPrice}/-
-                            </div>
-                        </div>
-                        <hr>
-                        </hr>
-                        <button className={"btn btn-success justify-center ms-2"} onClick={handleAddToCart}>Add To Cart</button>
-                    </div>
-                </div>
-            </div>
+  }, [priceOptions, size]);
+
+  useEffect(() => () => clearTimeout(addedTimer.current), []);
+
+  const handleAddToCart = () => {
+    if (!localStorage.getItem('authToken')) {
+      navigate('/login');
+      return;
+    }
+
+    dispatch({
+      type: 'ADD',
+      id: foodItem._id,
+      name: foodItem.name,
+      qty,
+      size: selectedSize,
+      price: finalPrice,
+      unitPrice,
+      img: foodItem.img
+    });
+
+    setJustAdded(true);
+    clearTimeout(addedTimer.current);
+    addedTimer.current = setTimeout(() => setJustAdded(false), 1400);
+
+    toast.success('Added to cart', {
+      position: 'top-right',
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      transition: Slide,
+      theme: 'colored'
+    });
+  };
+
+  return (
+    <article className="card card-food h-100 border-0 bg-white">
+      <div className="card-img-wrapper">
+        <img
+          src={foodItem.img || '/fallback-food.jpg'}
+          className="card-img-top"
+          alt={foodItem.name}
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = 'https://via.placeholder.com/400x180?text=No+Image';
+          }}
+        />
+        <span className="food-rating"><StarRounded /> {Number(foodItem.rating || 4.5).toFixed(1)}</span>
+        <span className="food-category">{foodItem.CategoryName || 'Popular'}</span>
+      </div>
+      <div className="card-body">
+        <h3 className="card-title">{foodItem.name}</h3>
+        <p className="card-text">
+          {foodItem.description || 'Delicious food item made with fresh ingredients.'}
+        </p>
+
+        <div className="food-options">
+          <div className="quantity-select">
+            <label htmlFor={`qty-${foodItem._id}`}>Qty</label>
+            <select
+              id={`qty-${foodItem._id}`}
+              className="form-select form-select-sm"
+              value={qty}
+              onChange={(e) => setQty(parseInt(e.target.value, 10))}
+            >
+              {Array.from({ length: 6 }, (_, i) => (
+                <option key={i + 1} value={i + 1}>
+                  {i + 1}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="size-options">
+            {priceOptions.length === 0 ? (
+              <span className="text-muted small">No sizes</span>
+            ) : (
+              priceOptions.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  className={`btn btn-sm size-pill ${selectedSize === option ? 'active' : 'btn-outline-success'}`}
+                  onClick={() => setSize(option)}
+                >
+                  {option}
+                </button>
+              ))
+            )}
+          </div>
         </div>
-    )
+
+        <div className="food-card-footer">
+          <div className="food-price"><strong>₹{finalPrice}</strong><span>₹{unitPrice} each</span></div>
+          <button className={`btn add-cart-btn ${justAdded ? 'is-added' : ''}`} onClick={handleAddToCart} disabled={!unitPrice}>
+            {justAdded ? <><CheckRounded /> Added</> : <><AddShoppingCartRounded /> Add</>}
+          </button>
+        </div>
+      </div>
+    </article>
+  );
 }

@@ -1,34 +1,62 @@
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const express = require('express');
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
 const mongoDB = require('./db');
 
-// Initialize MongoDB
-mongoDB();
+const allowedOrigins = (process.env.FRONTEND_URL || '')
+  .split(',')
+  .map((value) => value.trim())
+  .filter(Boolean);
 
-// Enable CORS for all requests
 app.use(cors({
-  origin: "https://mernapp-front.onrender.com", // Allow requests only from your frontend
-  credentials: true, // Allow cookies & authorization headers
-  methods: "GET,POST,PUT,DELETE" // Allowed HTTP methods
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
-
-// Middleware to parse JSON requests
 app.use(express.json());
 
-// Routes
-app.use('/api', require("./Routes/CreateUser"));
-app.use('/api', require("./Routes/DisplayData"));
+app.use('/api', require('./Routes/CreateUser'));
+app.use('/api', require('./Routes/DisplayData'));
+app.use('/api', require('./Routes/Orders'));
+app.use('/api', require('./Routes/Admin'));
 
-// Test route
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('GoFood backend is running');
 });
 
-// Start server
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+app.use((req, res) => {
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ success: false, message: 'API endpoint not found' });
+  }
+  return res.status(404).send('Not Found');
 });
+
+app.use((err, req, res, next) => {
+  if (req.path.startsWith('/api/')) {
+    console.error(err);
+    return res.status(500).json({ success: false, message: 'Server error' });
+  }
+  return next(err);
+});
+
+(async () => {
+  try {
+    await mongoDB();
+    app.listen(port, () => {
+      console.log(`Server listening on port ${port}`);
+    });
+  } catch (err) {
+    console.error('Failed to start server due to DB error:', err);
+    process.exit(1);
+  }
+})();
 
 module.exports = app;

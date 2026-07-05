@@ -1,16 +1,16 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import RestaurantRounded from '@mui/icons-material/RestaurantRounded';
+
 export default function Footer() {
   return (
-    <div>
-      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <div class="col-md-4 d-flex align-items-center">
-      <Link to="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-        
-      </Link>
-      <span class="text-muted">© 2024 GoFood, Inc</span>
-    </div>
-  </footer>
-    </div>
-  )
+    <footer className="app-footer">
+      <div className="container footer-inner">
+        <Link to="/" className="footer-brand"><span><RestaurantRounded /></span>GoFood</Link>
+        <p>Delicious meals, thoughtfully delivered.</p>
+        <nav><Link to="/">Menu</Link><Link to="/orders">Orders</Link><Link to="/cart">Cart</Link></nav>
+        <small>© 2026 GoFood. Made for food lovers.</small>
+      </div>
+    </footer>
+  );
 }
