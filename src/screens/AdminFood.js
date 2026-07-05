@@ -40,6 +40,19 @@ export default function AdminFood() {
     }
   }, [token]);
 
+  const fetchCategories = useCallback(async () => {
+    try {
+      const res = await fetch(buildApiUrl('/api/admin/categories'), {
+        headers: { 'auth-token': token }
+      });
+      const json = await parseApiResponse(res, 'Failed to load categories');
+      if (json?.success) setCategories(json.categories || []);
+    } catch (err) {
+      console.error(err);
+    }
+  }, [token]);
+
+
   useEffect(() => {
     if (!token) {
       navigate('/login');
@@ -51,18 +64,7 @@ export default function AdminFood() {
 
   
 
-  const fetchCategories = async () => {
-    try {
-      const res = await fetch(buildApiUrl('/api/admin/categories'), {
-        headers: { 'auth-token': token }
-      });
-      const json = await parseApiResponse(res, 'Failed to load categories');
-      if (json?.success) setCategories(json.categories || []);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
