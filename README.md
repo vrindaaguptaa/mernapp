@@ -1,8 +1,10 @@
-# 🍔 GoFood - Full Stack Food Delivery Platform
+# 🍔 GoFood – Full Stack MERN Food Delivery Platform
 
-A modern **MERN Stack Food Delivery Application** featuring secure authentication, online ordering, admin dashboard, order management, and Razorpay payment integration.
+GoFood is a full-stack food ordering platform built using the MERN stack. It allows users to browse food items, search by category, place orders, and track their order status. The application also includes a secure admin dashboard for managing food items, categories, and customer orders.
 
-# 🌐 Live Deployment
+---
+
+# 🌐 Live Demo
 
 ### Frontend (Vercel)
 
@@ -18,62 +20,35 @@ https://github.com/vrindaaguptaa/mernapp
 
 ---
 
-# 🚀 Deployment
-
-| Service | Platform |
-|---------|----------|
-| Frontend | Vercel |
-| Backend | Render |
-| Database | MongoDB Atlas |
-
-# 📸 Preview
-
-> Add screenshots here after uploading them to GitHub.
-
-- Home Page
-- Food Menu
-- Cart
-- Checkout
-- Orders
-- Admin Dashboard
-- Food Management
-- Category Management
-
----
-
 # ✨ Features
 
-## 👤 User Features
+## 👤 Customer Features
 
-- Secure User Registration & Login
+- User Registration & Login
 - JWT Authentication
 - Browse Food Menu
-- Search & Filter Food Items
-- Category Filtering
-- Add to Cart
-- Quantity Management
-- Razorpay Online Payment
-- Order Placement
-- Order History
-- Live Order Status Tracking
-- Responsive Design
+- Search Food Items
+- Filter by Category
+- Add Items to Cart
+- Quantity Selection
+- Place Orders
+- View Order History
+- Track Live Order Status
+- Responsive User Interface
 
 ---
 
 ## 👨‍💼 Admin Features
 
-- Admin Authentication
-- Dashboard Analytics
-- Manage Food Items
-- Add / Edit / Delete Categories
-- Add / Edit / Delete Food Items
-- Manage Customer Orders
+- Secure Admin Login
+- Dashboard Overview
+- Add Food Items
+- Edit Food Items
+- Delete Food Items
+- Manage Categories
 - Update Order Status
-  - Placed
-  - Preparing
-  - Delivered
-- Revenue Statistics
-- Customer Statistics
+- View Customer Orders
+- Dashboard Statistics
 
 ---
 
@@ -98,10 +73,6 @@ https://github.com/vrindaaguptaa/mernapp
 
 - MongoDB Atlas
 
-## Payment Gateway
-
-- Razorpay
-
 ## Deployment
 
 - Frontend → Vercel
@@ -109,24 +80,24 @@ https://github.com/vrindaaguptaa/mernapp
 
 ---
 
-# 📂 Folder Structure
+# 📂 Project Structure
 
 ```
-mernapp
+mernapp/
 │
-├── backend
-│   ├── middleware
-│   ├── Routes
+├── backend/
+│   ├── middleware/
+│   ├── Routes/
 │   ├── db.js
 │   ├── index.js
 │   └── package.json
 │
-├── public
+├── public/
 │
-├── src
-│   ├── components
-│   ├── screens
-│   ├── utils
+├── src/
+│   ├── components/
+│   ├── screens/
+│   ├── utils/
 │   ├── App.js
 │   └── ContextReducer.js
 │
@@ -136,22 +107,21 @@ mernapp
 
 ---
 
-# ⚙️ System Architecture
+# 🏗️ System Architecture
 
 ```
-                React Frontend
-                       │
-             REST API (Fetch)
-                       │
-                Express Backend
-                       │
-        ┌──────────────┴──────────────┐
-        │                             │
-     MongoDB Atlas              Razorpay API
-        │
-        ▼
-     Store Users,
- Food Items & Orders
+                 React Frontend
+                        │
+                        ▼
+                 REST API Requests
+                        │
+                        ▼
+               Express.js Backend
+                        │
+                JWT Authentication
+                        │
+                        ▼
+                 MongoDB Atlas
 ```
 
 ---
@@ -160,25 +130,27 @@ mernapp
 
 ```
 User Login
-      │
-      ▼
-Express API
-      │
+     │
+     ▼
+Backend Authentication
+     │
+     ▼
 Verify Credentials
-      │
-      ▼
+     │
+     ▼
 Generate JWT Token
-      │
-      ▼
-Store Token in LocalStorage
-      │
-      ▼
-Protected Routes Access
+     │
+     ▼
+Store Token
+(Local Storage)
+     │
+     ▼
+Access Protected Routes
 ```
 
 ---
 
-# 📦 Installation
+# ⚙️ Installation
 
 ## Clone Repository
 
@@ -188,15 +160,15 @@ git clone https://github.com/vrindaaguptaa/mernapp.git
 
 ---
 
-## Install Frontend
+## Install Dependencies
+
+### Frontend
 
 ```bash
 npm install
 ```
 
----
-
-## Install Backend
+### Backend
 
 ```bash
 cd backend
@@ -210,20 +182,16 @@ npm install
 Create a `.env` file inside the **backend** folder.
 
 ```env
-MONGO_URI=your_mongodb_uri
+MONGO_URI=your_mongodb_connection_string
 
-JWT_SECRET=your_secret
+JWT_SECRET=your_jwt_secret
 
 FRONTEND_URL=http://localhost:3000
-
-RAZORPAY_KEY_ID=your_key
-
-RAZORPAY_KEY_SECRET=your_secret
 ```
 
 ---
 
-# ▶️ Run the Project
+# ▶️ Running the Project
 
 ## Start Backend
 
@@ -231,8 +199,6 @@ RAZORPAY_KEY_SECRET=your_secret
 cd backend
 npx nodemon index.js
 ```
-
----
 
 ## Start Frontend
 
@@ -247,7 +213,7 @@ npm start
 ## Authentication
 
 | Method | Endpoint |
-|---------|----------|
+|----------|--------------------|
 | POST | /api/createuser |
 | POST | /api/loginuser |
 
@@ -256,7 +222,7 @@ npm start
 ## Food
 
 | Method | Endpoint |
-|---------|----------|
+|----------|----------------|
 | GET | /api/foodData |
 
 ---
@@ -264,7 +230,7 @@ npm start
 ## Orders
 
 | Method | Endpoint |
-|---------|----------|
+|----------|----------------|
 | POST | /api/orderData |
 | POST | /api/myOrderData |
 
@@ -273,7 +239,7 @@ npm start
 ## Admin
 
 | Method | Endpoint |
-|---------|----------|
+|----------|-------------------------------|
 | GET | /api/admin/dashboard |
 | GET | /api/admin/foods |
 | POST | /api/admin/addFood |
@@ -288,46 +254,42 @@ npm start
 
 ---
 
-# 🚀 Future Improvements
+# 💡 Key Concepts Implemented
 
-- Email Notifications
-- Coupon System
-- Wishlist
-- Product Reviews
-- Image Upload using Cloudinary
-- Restaurant Panel
-- Delivery Partner Module
-- Push Notifications
-
----
-
-# 💻 Key Concepts Used
-
-- MERN Stack
-- REST APIs
+- MERN Stack Development
+- RESTful APIs
 - JWT Authentication
 - Protected Routes
-- Context API
-- React Hooks
 - CRUD Operations
-- MongoDB Aggregation
-- Payment Gateway Integration
-- Responsive UI Design
+- React Context API
+- React Hooks
+- MongoDB Atlas
+- Responsive UI
+- Admin Dashboard
+- Order Management
 
 ---
 
-# 👨‍💻 Author
+# 🚀 Future Enhancements
+
+- Online Payment Gateway Integration
+- Image Upload Support
+- Email Notifications
+- Coupon System
+- Customer Reviews & Ratings
+- Restaurant Panel
+
+---
+
+# 👩‍💻 Author
 
 **Vrinda Gupta**
 
-B.Tech CSE | NIT Patna
+B.Tech CSE, NIT Patna
 
 GitHub:
 https://github.com/vrindaaguptaa
 
-LinkedIn:
-(Add your LinkedIn profile here)
-
 ---
 
-# ⭐ If you found this project useful, don't forget to star the repository!
+⭐ If you like this project, consider giving it a star!
