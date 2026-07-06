@@ -1,71 +1,333 @@
-# Getting Started with Create React App
+# 🍔 GoFood - Full Stack Food Delivery Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern **MERN Stack Food Delivery Application** featuring secure authentication, online ordering, admin dashboard, order management, and Razorpay payment integration.
 
-## Available Scripts
+# 🌐 Live Deployment
 
-In the project directory, you can run:
+### Frontend (Vercel)
 
-### `npm start`
+https://mernapp-fq3h-livid.vercel.app
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Backend API (Render)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+https://mernapp-b9of.onrender.com
 
-### `npm test`
+### GitHub Repository
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+https://github.com/vrindaaguptaa/mernapp
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# 🚀 Deployment
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+| Service | Platform |
+|---------|----------|
+| Frontend | Vercel |
+| Backend | Render |
+| Database | MongoDB Atlas |
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# 📸 Preview
 
-### `npm run eject`
+> Add screenshots here after uploading them to GitHub.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Home Page
+- Food Menu
+- Cart
+- Checkout
+- Orders
+- Admin Dashboard
+- Food Management
+- Category Management
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# ✨ Features
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 👤 User Features
 
-## Learn More
+- Secure User Registration & Login
+- JWT Authentication
+- Browse Food Menu
+- Search & Filter Food Items
+- Category Filtering
+- Add to Cart
+- Quantity Management
+- Razorpay Online Payment
+- Order Placement
+- Order History
+- Live Order Status Tracking
+- Responsive Design
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 👨‍💼 Admin Features
 
-### Code Splitting
+- Admin Authentication
+- Dashboard Analytics
+- Manage Food Items
+- Add / Edit / Delete Categories
+- Add / Edit / Delete Food Items
+- Manage Customer Orders
+- Update Order Status
+  - Placed
+  - Preparing
+  - Delivered
+- Revenue Statistics
+- Customer Statistics
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+# 🛠 Tech Stack
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Frontend
 
-### Making a Progressive Web App
+- React.js
+- React Router DOM
+- Bootstrap 5
+- Material UI Icons
+- React Toastify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Backend
 
-### Advanced Configuration
+- Node.js
+- Express.js
+- JWT Authentication
+- bcrypt.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Database
 
-### Deployment
+- MongoDB Atlas
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Payment Gateway
 
-### `npm run build` fails to minify
+- Razorpay
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# Mern-App
+## Deployment
+
+- Frontend → Vercel
+- Backend → Render
+
+---
+
+# 📂 Folder Structure
+
+```
+mernapp
+│
+├── backend
+│   ├── middleware
+│   ├── Routes
+│   ├── db.js
+│   ├── index.js
+│   └── package.json
+│
+├── public
+│
+├── src
+│   ├── components
+│   ├── screens
+│   ├── utils
+│   ├── App.js
+│   └── ContextReducer.js
+│
+├── package.json
+└── README.md
+```
+
+---
+
+# ⚙️ System Architecture
+
+```
+                React Frontend
+                       │
+             REST API (Fetch)
+                       │
+                Express Backend
+                       │
+        ┌──────────────┴──────────────┐
+        │                             │
+     MongoDB Atlas              Razorpay API
+        │
+        ▼
+     Store Users,
+ Food Items & Orders
+```
+
+---
+
+# 🔐 Authentication Flow
+
+```
+User Login
+      │
+      ▼
+Express API
+      │
+Verify Credentials
+      │
+      ▼
+Generate JWT Token
+      │
+      ▼
+Store Token in LocalStorage
+      │
+      ▼
+Protected Routes Access
+```
+
+---
+
+# 📦 Installation
+
+## Clone Repository
+
+```bash
+git clone https://github.com/vrindaaguptaa/mernapp.git
+```
+
+---
+
+## Install Frontend
+
+```bash
+npm install
+```
+
+---
+
+## Install Backend
+
+```bash
+cd backend
+npm install
+```
+
+---
+
+# 🔑 Environment Variables
+
+Create a `.env` file inside the **backend** folder.
+
+```env
+MONGO_URI=your_mongodb_uri
+
+JWT_SECRET=your_secret
+
+FRONTEND_URL=http://localhost:3000
+
+RAZORPAY_KEY_ID=your_key
+
+RAZORPAY_KEY_SECRET=your_secret
+```
+
+---
+
+# ▶️ Run the Project
+
+## Start Backend
+
+```bash
+cd backend
+npx nodemon index.js
+```
+
+---
+
+## Start Frontend
+
+```bash
+npm start
+```
+
+---
+
+# 📡 API Endpoints
+
+## Authentication
+
+| Method | Endpoint |
+|---------|----------|
+| POST | /api/createuser |
+| POST | /api/loginuser |
+
+---
+
+## Food
+
+| Method | Endpoint |
+|---------|----------|
+| GET | /api/foodData |
+
+---
+
+## Orders
+
+| Method | Endpoint |
+|---------|----------|
+| POST | /api/orderData |
+| POST | /api/myOrderData |
+
+---
+
+## Admin
+
+| Method | Endpoint |
+|---------|----------|
+| GET | /api/admin/dashboard |
+| GET | /api/admin/foods |
+| POST | /api/admin/addFood |
+| PUT | /api/admin/editFood/:id |
+| DELETE | /api/admin/deleteFood/:id |
+| GET | /api/admin/categories |
+| POST | /api/admin/addCategory |
+| PUT | /api/admin/editCategory/:id |
+| DELETE | /api/admin/deleteCategory/:id |
+| GET | /api/admin/orders |
+| PUT | /api/admin/updateOrderStatus/:id |
+
+---
+
+# 🚀 Future Improvements
+
+- Email Notifications
+- Coupon System
+- Wishlist
+- Product Reviews
+- Image Upload using Cloudinary
+- Restaurant Panel
+- Delivery Partner Module
+- Push Notifications
+
+---
+
+# 💻 Key Concepts Used
+
+- MERN Stack
+- REST APIs
+- JWT Authentication
+- Protected Routes
+- Context API
+- React Hooks
+- CRUD Operations
+- MongoDB Aggregation
+- Payment Gateway Integration
+- Responsive UI Design
+
+---
+
+# 👨‍💻 Author
+
+**Vrinda Gupta**
+
+B.Tech CSE | NIT Patna
+
+GitHub:
+https://github.com/vrindaaguptaa
+
+LinkedIn:
+(Add your LinkedIn profile here)
+
+---
+
+# ⭐ If you found this project useful, don't forget to star the repository!
